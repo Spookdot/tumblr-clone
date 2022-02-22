@@ -14,8 +14,10 @@
   "dependencies": {
     "@fastify/session": "^6.4.0",
     "ajv": "^8.10.0",
+    "argon2": "^0.28.4",
     "fastify": "^3.27.2",
     "fastify-cookie": "^5.5.0",
-    "fastify-decorators": "^3.11.0"
+    "fastify-decorators": "^3.11.0",
+    "mongoose": "^6.2.3"
   }
 }

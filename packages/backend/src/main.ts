@@ -3,6 +3,7 @@ import fastifySessionPlugin from "@fastify/session";
 import fastifyCookie from "fastify-cookie";
 import { bootstrap } from "fastify-decorators";
 import { resolve } from "path";
+import { connect } from "mongoose";
 
 declare module "fastify" {
   interface Session {
@@ -24,4 +25,5 @@ server.register(bootstrap, {
   mask: /\.controller\./,
 });
 
+connect("mongodb://root:example@localhost:27017/nuxt-fastify-test");
 server.listen(8080);
