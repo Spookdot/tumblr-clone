@@ -4,6 +4,7 @@ import fastifyCookie from "fastify-cookie";
 import { bootstrap } from "fastify-decorators";
 import { resolve } from "path";
 import { connect } from "mongoose";
+import { rootCertificates } from "tls";
 
 declare module "fastify" {
   interface Session {
@@ -25,5 +26,9 @@ server.register(bootstrap, {
   mask: /\.controller\./,
 });
 
-connect("mongodb://root:example@localhost:27017/nuxt-fastify-test");
+connect("mongodb://localhost:27017/nuxt-fastify-test", {
+  user: "root",
+  pass: "example",
+  authSource: "admin",
+});
 server.listen(8080);

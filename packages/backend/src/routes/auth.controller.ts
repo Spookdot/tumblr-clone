@@ -72,6 +72,7 @@ export default class AuthController {
     const passwordHash = await hash(password);
     const user = new User({ username, password: passwordHash });
     await user.save();
+    return { message: "User successfully created" };
   }
 
   @POST({ url: "login", options: { schema: { body: loginDataSchema } } })
