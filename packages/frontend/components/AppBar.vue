@@ -2,7 +2,16 @@
   <v-app-bar elevation="4" app>
     <v-app-bar-title> Chat App </v-app-bar-title>
     <v-spacer />
-    <div v-if="authenticated">{{ username }}</div>
+    <v-menu v-if="authenticated" offset-y>
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn v-bind="attrs" v-on="on">
+          <v-icon>mdi-account</v-icon> {{ username }}
+        </v-btn>
+      </template>
+      <v-list>
+        <v-list-item @click="logout" link> Logout </v-list-item>
+      </v-list>
+    </v-menu>
     <v-btn class="float-right" to="/login" v-else>
       <v-icon>mdi-login</v-icon> Login
     </v-btn>
@@ -20,6 +29,15 @@ export default Vue.extend({
     const data = (await response.json()) as authResponse;
     this.authenticated = data.authenticated;
     this.username = data.username;
+  },
+  methods: {
+    async logout() {
+      const response = await fetch('/api/logout', { method: 'POST' });
+
+      if (response && response.status === 200) {
+        this.$router.go(0);
+      }
+    },
   },
   data(): authResponse {
     return { authenticated: false };

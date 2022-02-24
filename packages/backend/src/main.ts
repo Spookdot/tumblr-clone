@@ -4,7 +4,6 @@ import fastifyCookie from "fastify-cookie";
 import { bootstrap } from "fastify-decorators";
 import { resolve } from "path";
 import { connect } from "mongoose";
-import { rootCertificates } from "tls";
 
 declare module "fastify" {
   interface Session {
