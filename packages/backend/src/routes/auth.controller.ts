@@ -2,7 +2,7 @@ import { Controller, GET, POST } from "fastify-decorators";
 import { FastifyRequest, FastifyReply } from "fastify";
 import { JSONSchemaType } from "ajv";
 import { hash, verify } from "argon2";
-import { User } from "../models/User";
+import { UserModel } from "../models/User";
 
 interface LoginData {
   username: string;
@@ -38,7 +38,7 @@ export default class AuthController {
     reply: FastifyReply
   ) {
     const { username, password } = request.body;
-    const user = await User.findOne({ username });
+    const user = await UserModel.findOne({ username });
     if (user !== null) {
       user.password = password;
       await user.save();
@@ -65,7 +65,7 @@ export default class AuthController {
       return { message: "Username and Password both need to be given" };
     }
     const passwordHash = await hash(password);
-    const user = new User({ username, password: passwordHash });
+    const user = new UserModel({ username, password: passwordHash });
     await user.save();
     return { message: "User successfully created" };
   }
@@ -77,7 +77,7 @@ export default class AuthController {
   ) {
     const { username, password } = request.body;
     let message = "";
-    const user = await User.findOne({ username }, "password");
+    const user = await UserModel.findOne({ username }, "password");
     if (user !== null && (await verify(user.password, password))) {
       request.session.set("authenticated", true);
       request.session.set("username", username);
