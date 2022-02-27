@@ -18,13 +18,8 @@ const loginDataSchema: JSONSchemaType<LoginData> = {
   required: ["username", "password"],
 };
 
-@Controller({ route: "/api/" })
+@Controller({ route: "/api/user/" })
 export default class AuthController {
-  @GET({ url: "/ping" })
-  async ping() {
-    return "pong\n";
-  }
-
   @GET({ url: "authenticated" })
   async authenticated(
     request: FastifyRequest,

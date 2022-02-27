@@ -25,14 +25,14 @@ type authResponse = { authenticated: boolean; username?: string };
 
 export default Vue.extend({
   async mounted() {
-    const response = await fetch('/api/authenticated');
+    const response = await fetch('/api/user/authenticated');
     const data = (await response.json()) as authResponse;
     this.authenticated = data.authenticated;
     this.username = data.username;
   },
   methods: {
     async logout() {
-      const response = await fetch('/api/logout', { method: 'POST' });
+      const response = await fetch('/api/user/logout', { method: 'POST' });
 
       if (response && response.status === 200) {
         this.$router.go(0);
