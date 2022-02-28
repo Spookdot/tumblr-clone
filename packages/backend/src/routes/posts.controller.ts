@@ -87,7 +87,7 @@ export default class PostController {
     }
 
     await post.save();
-    return `Successfully created post ${post._id}`;
+    return { message: `Successfully created post ${post._id}`, id: post._id };
   }
 
   @GET({ url: "/", options: { schema: { querystring: postByIdSchema } } })

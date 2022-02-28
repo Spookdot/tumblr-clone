@@ -1,6 +1,6 @@
 <template>
   <v-app-bar elevation="4" app>
-    <v-app-bar-title> Chat App </v-app-bar-title>
+    <v-app-bar-title> PostBase </v-app-bar-title>
     <v-spacer />
     <v-menu v-if="authenticated" offset-y>
       <template v-slot:activator="{ on, attrs }">
