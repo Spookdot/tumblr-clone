@@ -23,7 +23,6 @@ type Post = {
 };
 
 export default Vue.extend({
-  layout: 'blank',
   async mounted() {
     const { id } = this.$route.params;
     if (!id) {
