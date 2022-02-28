@@ -3,7 +3,7 @@ import { FastifyRequest as Request, FastifyReply as Reply } from "fastify";
 import { Types } from "mongoose";
 import { JSONSchemaType } from "ajv";
 import { Post, PostModel } from "../models/Post";
-import { UserModel } from "../models/User";
+import { User, UserModel } from "../models/User";
 import { Tag, TagModel } from "../models/Tag";
 
 interface PostData {
@@ -97,9 +97,9 @@ export default class PostController {
   ): Promise<Post | string> {
     const { id } = request.query;
 
-    const post = await PostModel.findById(id, "title content tags").populate<{
-      tags: Array<Tag>;
-    }>("tags", "name");
+    const post = await PostModel.findById(id, "title author content tags")
+      .populate<{ tags: Array<Tag> }>("tags", "name")
+      .populate<{ author: User }>("author", "username");
 
     if (post === null) {
       reply.code(400);
@@ -140,7 +140,12 @@ export default class PostController {
     }
 
     const posts = await Promise.all(
-      foundPosts.map((_id) => PostModel.findOne({ _id }, "title"))
+      foundPosts.map((_id) =>
+        PostModel.findOne({ _id }, "title author").populate(
+          "author",
+          "username"
+        )
+      )
     );
 
     return posts;
