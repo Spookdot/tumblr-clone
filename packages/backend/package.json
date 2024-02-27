@@ -18,6 +18,6 @@
     "fastify": "^3.27.2",
     "fastify-cookie": "^5.5.0",
     "fastify-decorators": "^3.11.0",
-    "mongoose": "^6.2.3"
+    "mongoose": "^6.4.6"
   }
 }
